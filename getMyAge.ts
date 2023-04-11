@@ -17,7 +17,8 @@ const inputToNumber = (input: string | number | Date) => {
     if (Object.prototype.toString.call(input) === "[object Date]") {
       //   return dateComparsion(new Date(), input);
       return input.getFullYear();
-    } else throw new Error("Please provide object as a Date");
+    }
+    throw new Error("Please provide object as a Date");
   }
   return input;
 };
