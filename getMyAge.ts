@@ -23,7 +23,7 @@ const inputToNumber = (input: string | number | Date) => {
 };
 
 const isInputString = (input: string) => {
-  if (/^\d{4}/.test(input) !== true) {
+  if (/^\d{4}$/.test(input) !== true) {
     throw new Error("You must provide string with 4 digits");
   }
   return isNumberMoreThanCurrentYear(Number(input));
