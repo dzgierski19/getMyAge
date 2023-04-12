@@ -1,39 +1,51 @@
+const AGE_OF_THE_OLDEST_PERSON: number = 123;
+const CURRENT_YEAR: number = new Date().getFullYear();
+
 const getMyAge = (input: string | number | Date) => {
   const stringNumbered = inputToNumber(input);
-  const ageOfTheOldestPersonEverAlive = 123;
-  if (
-    new Date().getFullYear() - stringNumbered >
-    ageOfTheOldestPersonEverAlive
-  ) {
+  if (CURRENT_YEAR - stringNumbered > AGE_OF_THE_OLDEST_PERSON) {
     throw new Error("You are the oldest person in the world");
   }
-  return new Date().getFullYear() - stringNumbered;
+  return CURRENT_YEAR - stringNumbered;
 };
 
 const inputToNumber = (input: string | number | Date) => {
   if (typeof input === "string") {
-    return Number(input);
-  } else if (typeof input === "object") {
-    if (Object.prototype.toString.call(input) === "[object Date]") {
-      //   return dateComparsion(new Date(), input);
-      return input.getFullYear();
-    }
-    throw new Error("Please provide object as a Date");
+    return isInputString(input);
+  }
+  if (input instanceof Date) {
+    return isNumberMoreThanCurrentYear(input.getFullYear());
+  }
+  if (typeof input === "number") {
+    return isNumberMoreThanCurrentYear(input);
+  }
+  throw new Error("You must provide string, number or Date");
+};
+
+const isInputString = (input: string) => {
+  if (/^\d{4}/.test(input) !== true) {
+    throw new Error("You must provide string with 4 digits");
+  }
+  return isNumberMoreThanCurrentYear(Number(input));
+};
+
+const isNumberMoreThanCurrentYear = (input: number) => {
+  isInputInteger(input);
+  if (input > CURRENT_YEAR) {
+    throw new Error("You are not born yet");
   }
   return input;
 };
 
-// const dateComparsion = (input1: Date, input2: Date) => {
-//   return input1.getFullYear() - input2.getFullYear();
-// };
+const isInputInteger = (input: number) => {
+  if (!Number.isInteger(input)) {
+    throw new Error("You must provide Integer");
+  }
+};
 
-const result1 = getMyAge(new Date(1999, 1, 1));
+const result1 = getMyAge(new Date(2023, 1, 1));
 console.log(result1);
-const result2 = getMyAge(1920);
+const result2 = getMyAge(2022);
 console.log(result2);
-
-// const result1 = getMyAge(new Date(1990, 1, 1));
-// const result2 = getMyAge("1990");
-// const result3 = getMyAge(1990);
-
-// wyniki result1, result2 i result3 mają być identyczne
+const result3 = getMyAge("1902");
+console.log(result3);
