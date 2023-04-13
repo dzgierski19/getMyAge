@@ -2,27 +2,24 @@ const AGE_OF_THE_OLDEST_PERSON: number = 123;
 const CURRENT_YEAR: number = new Date().getFullYear();
 
 const getMyAge = (input: string | number | Date) => {
-  const stringNumbered = inputToNumber(input);
-  if (CURRENT_YEAR - stringNumbered > AGE_OF_THE_OLDEST_PERSON) {
+  const inputTypeNumbered = checkInputType(input);
+  if (CURRENT_YEAR - inputTypeNumbered > AGE_OF_THE_OLDEST_PERSON) {
     throw new Error("You are the oldest person in the world");
   }
-  return CURRENT_YEAR - stringNumbered;
+  return CURRENT_YEAR - inputTypeNumbered;
 };
 
-const inputToNumber = (input: string | number | Date) => {
+const checkInputType = (input: string | number | Date) => {
   if (typeof input === "string") {
-    return isInputString(input);
+    return changeStringToNumber(input);
   }
   if (input instanceof Date) {
     return isNumberMoreThanCurrentYear(input.getFullYear());
   }
-  if (typeof input === "number") {
-    return isNumberMoreThanCurrentYear(input);
-  }
-  throw new Error("You must provide string, number or Date");
+  return isNumberMoreThanCurrentYear(input);
 };
 
-const isInputString = (input: string) => {
+const changeStringToNumber = (input: string) => {
   if (/^\d{4}$/.test(input) !== true) {
     throw new Error("You must provide string with 4 digits");
   }
@@ -45,7 +42,7 @@ const isInputInteger = (input: number) => {
 
 const result1 = getMyAge(new Date(2023, 1, 1));
 console.log(result1);
-const result2 = getMyAge(2022);
+const result2 = getMyAge(1993);
 console.log(result2);
 const result3 = getMyAge("1902");
 console.log(result3);
