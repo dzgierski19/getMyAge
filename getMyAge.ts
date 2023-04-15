@@ -1,6 +1,5 @@
 const AGE_OF_THE_OLDEST_PERSON: number = 123;
 const CURRENT_YEAR: number = new Date().getFullYear();
-
 const CURRENT_DATE: number =
   (new Date().getTime() + 1970 * (1000 * 60 * 60 * 24 * 365.25)) /
   (1000 * 60 * 60 * 24 * 365.25);
@@ -12,8 +11,9 @@ const getMyAge = (input: string | number | Date) => {
     return changeStringToNumberOrDate(input);
   }
   if (input instanceof Date) {
-    const dateDifference2 = CURRENT_DATE - getDifferenceInYearsFromDate(input);
-    return Number(dateDifference2.toFixed(2));
+    const differenceFromCurrentDateToTypedDate =
+      CURRENT_DATE - getDifferenceInYearsFromDate(input);
+    return Number(differenceFromCurrentDateToTypedDate.toFixed(2));
   }
   return CURRENT_YEAR - getValidYear(input);
 };
@@ -27,9 +27,9 @@ const changeStringToNumberOrDate = (input: string) => {
     /^\d{4}[/]\d{2}[/]\d{2}$/.test(input) === true ||
     /^\d{4}[-]\d{2}[-]\d{2}$/.test(input) === true
   ) {
-    const dateDifference =
+    const differenceFromCurrentDateToTyped6TypeString =
       CURRENT_DATE - getDifferenceInYearsFromDate(new Date(input));
-    return Number(dateDifference.toFixed(2));
+    return Number(differenceFromCurrentDateToTyped6TypeString.toFixed(2));
   }
   throw new Error(
     "You must provide string with 4 digits or in full date format"
@@ -79,7 +79,7 @@ const result3 = getMyAge("1900/06/16");
 console.log(result3);
 const result4 = getMyAge("1900/04/14");
 console.log(result4);
-const result5 = getMyAge(new Date(2022, 4, 10));
+const result5 = getMyAge(new Date(2023, 3, 15));
 console.log(result5);
 
 // DODAĆ DATE I STRING DODATKOWE WYTYCZNE
