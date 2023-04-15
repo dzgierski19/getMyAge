@@ -14,7 +14,7 @@ const checkAndConvertInputToNumber = (input: string | number | Date) => {
     return changeStringToNumberOrDate(input);
   }
   if (input instanceof Date) {
-    return getValidYear(input.getFullYear());
+    return getDifferenceInYearsFromDate(input);
   }
   return getValidYear(input);
 };
@@ -28,11 +28,18 @@ const changeStringToNumberOrDate = (input: string) => {
     /^\d{4}[/]\d{2}[/]\d{2}$/.test(input) === true ||
     /^\d{4}[-]\d{2}[-]\d{2}$/.test(input) === true
   ) {
-    return getValidYear(Number(input.slice(0, 4)));
+    return getDifferenceInYearsFromDate(new Date(input));
   }
   throw new Error(
     "You must provide string with 4 digits or in full date format"
   );
+};
+
+const getDifferenceInYearsFromDate = (input: Date) => {
+  const differenceInYearsIncludingDayAndMonth = Math.floor(
+    (new Date().getTime() - input.getTime()) / (1000 * 60 * 60 * 24 * 365)
+  );
+  return differenceInYearsIncludingDayAndMonth;
 };
 
 const getValidYear = (input: number) => {
@@ -49,12 +56,16 @@ const isInputInteger = (input: number) => {
   }
 };
 
-const result1 = getMyAge(new Date(2023, 1, 1));
+const result1 = getDifferenceInYearsFromDate(new Date(1800, 1, 1));
 console.log(result1);
 const result2 = getMyAge(1993);
 console.log(result2);
-const result3 = getMyAge("1900/00/11");
+const result3 = changeStringToNumberOrDate("1901/04/18");
 console.log(result3);
+const result4 = getMyAge("1902/05/18");
+console.log(result4);
+const result5 = getMyAge(new Date("1902/05/19"));
+console.log(result5);
 
 // DODAĆ DATE I STRING DODATKOWE WYTYCZNE
 // dodać dzień i miesiąc
