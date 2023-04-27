@@ -8,28 +8,29 @@ console.log(CURRENT_DATE);
 
 const getMyAge = (input: string | number | Date) => {
   if (typeof input === "string") {
-    return changeStringToNumberOrDate(input);
+    return calculateAgeIfInputIsString(input);
   }
   if (input instanceof Date) {
     const differenceFromCurrentDateToTypedDate =
       CURRENT_DATE - getDifferenceInYearsFromDate(input);
-    return Number(differenceFromCurrentDateToTypedDate.toFixed(2));
+    return Math.floor(differenceFromCurrentDateToTypedDate);
   }
+
   return CURRENT_YEAR - getValidYear(input);
 };
 
-const changeStringToNumberOrDate = (input: string) => {
+const calculateAgeIfInputIsString = (input: string) => {
   if (/^\d{4}$/.test(input) === true) {
     return CURRENT_YEAR - getValidYear(Number(input));
   } else if (
-    /^\d{4}[ ]\d{2}[ ]\d{2}$/.test(input) === true ||
-    /^\d{4}[.]\d{2}[.]\d{2}$/.test(input) === true ||
-    /^\d{4}[/]\d{2}[/]\d{2}$/.test(input) === true ||
-    /^\d{4}[-]\d{2}[-]\d{2}$/.test(input) === true
+    /^\d{4}[ ]\d{2}[ ]\d{2}$/.test(input) ||
+    /^\d{4}[.]\d{2}[.]\d{2}$/.test(input) ||
+    /^\d{4}[/]\d{2}[/]\d{2}$/.test(input) ||
+    /^\d{4}[-]\d{2}[-]\d{2}$/.test(input)
   ) {
-    const differenceFromCurrentDateToTyped6TypeString =
+    const yearDifference =
       CURRENT_DATE - getDifferenceInYearsFromDate(new Date(input));
-    return Number(differenceFromCurrentDateToTyped6TypeString.toFixed(2));
+    return Math.floor(yearDifference);
   }
   throw new Error(
     "You must provide string with 4 digits or in full date format"
@@ -37,13 +38,11 @@ const changeStringToNumberOrDate = (input: string) => {
 };
 
 const getDifferenceInYearsFromDate = (input: Date) => {
-  const differenceInYearsIncludingDayAndMonth =
-    (new Date().getTime() - input.getTime()) / (1000 * 60 * 60 * 24 * 365.25);
-  const inputRoundedToSecondDecimalPlace = Number(
-    differenceInYearsIncludingDayAndMonth.toFixed(2)
+  const differenceInYearsIncludingDayAndMonth = Math.floor(
+    (new Date().getTime() - input.getTime()) / (1000 * 60 * 60 * 24 * 365.25)
   );
-  getValidYear2(inputRoundedToSecondDecimalPlace);
-  return CURRENT_DATE - inputRoundedToSecondDecimalPlace;
+  getValidYear(CURRENT_YEAR - differenceInYearsIncludingDayAndMonth);
+  return CURRENT_DATE - differenceInYearsIncludingDayAndMonth;
 };
 
 const getValidYear = (input: number) => {
@@ -56,14 +55,16 @@ const getValidYear = (input: number) => {
   return input;
 };
 
-const getValidYear2 = (input: number) => {
-  // isInputInteger(input);
-  if (input > AGE_OF_THE_OLDEST_PERSON) {
-    throw new Error("You are the oldest person in the world");
-  } else if (0 > input) {
-    throw new Error("You are not born yet");
-  }
-};
+// //wrzucic calosc do getValidYear lub checkIfValidYEar
+
+// const checkIfValidYear = (input: number) => {
+//   // isInputInteger(input);
+//   if (input > AGE_OF_THE_OLDEST_PERSON) {
+//     throw new Error("You are the oldest person in the world");
+//   } else if (0 > input) {
+//     throw new Error("You are not born yet");
+//   }
+// };
 
 const isInputInteger = (input: number) => {
   if (!Number.isInteger(input)) {
