@@ -2,12 +2,14 @@ const AGE_OF_THE_OLDEST_PERSON: number = 123;
 const NUMBER_OF_MONTHS_IN_A_YEAR: number = 12;
 const CURRENT_YEAR: number = new Date().getFullYear();
 const CURRENT_NEW_DATE: Date = new Date();
-const CURRENT_DATE = new Date(2023, 5, 3);
+//const CURRENT_DATE = new Date(2023, 5, 3);
 const NUMBER_OF_DAYS_ON_FEBRUARY: number = 28;
 const NUMBER_OF_DAYS_ON_EVEN_MONTH: number = 30;
 const NUMBER_OF_DAYS_ON_ODD_MONTH: number = 31;
 
-console.log(CURRENT_DATE);
+console.log(CURRENT_NEW_DATE);
+
+console.log(new Date("1900 06 03"));
 
 const getMyAge = (input: string | number | Date) => {
   if (typeof input === "string") {
@@ -48,7 +50,7 @@ const calculateAgeIfInputIsString = (input: string) => {
     return getDiffInYears(new Date(input));
   }
   throw new Error(
-    "You must provide string with 4 digits or in full date format"
+    "You must provide string with 4 digits (year only) or in full date format"
   );
 };
 
@@ -56,23 +58,24 @@ const calculateAgeIfInputIsString = (input: string) => {
 
 const getDiffInYearsValidation = (input: Date) => {
   if (
-    CURRENT_DATE.getFullYear() < input.getFullYear() ||
-    (CURRENT_DATE.getFullYear() === input.getFullYear() &&
-      CURRENT_DATE.getMonth() < input.getMonth()) ||
-    (CURRENT_DATE.getFullYear() === input.getFullYear() &&
-      CURRENT_DATE.getMonth() === input.getMonth() &&
-      CURRENT_DATE.getDate() < input.getDate())
+    CURRENT_NEW_DATE.getFullYear() < input.getFullYear() ||
+    (CURRENT_NEW_DATE.getFullYear() === input.getFullYear() &&
+      CURRENT_NEW_DATE.getMonth() < input.getMonth()) ||
+    (CURRENT_NEW_DATE.getFullYear() === input.getFullYear() &&
+      CURRENT_NEW_DATE.getMonth() === input.getMonth() &&
+      CURRENT_NEW_DATE.getDate() < input.getDate())
   ) {
     throw new Error("you are not born");
   } else if (
-    (CURRENT_DATE.getFullYear() - AGE_OF_THE_OLDEST_PERSON ===
+    (CURRENT_NEW_DATE.getFullYear() - AGE_OF_THE_OLDEST_PERSON ===
       input.getFullYear() &&
-      CURRENT_DATE.getMonth() === input.getMonth() &&
-      CURRENT_DATE.getDate() > input.getDate()) ||
-    (CURRENT_DATE.getFullYear() - AGE_OF_THE_OLDEST_PERSON ===
+      CURRENT_NEW_DATE.getMonth() === input.getMonth() &&
+      CURRENT_NEW_DATE.getDate() > input.getDate()) ||
+    (CURRENT_NEW_DATE.getFullYear() - AGE_OF_THE_OLDEST_PERSON ===
       input.getFullYear() &&
-      CURRENT_DATE.getMonth() > input.getMonth()) ||
-    CURRENT_DATE.getFullYear() - AGE_OF_THE_OLDEST_PERSON > input.getFullYear()
+      CURRENT_NEW_DATE.getMonth() > input.getMonth()) ||
+    CURRENT_NEW_DATE.getFullYear() - AGE_OF_THE_OLDEST_PERSON >
+      input.getFullYear()
   ) {
     throw new Error("You are the oldest");
   }
@@ -80,74 +83,80 @@ const getDiffInYearsValidation = (input: Date) => {
 };
 
 const getDiffInDays = (input: Date) => {
-  if (CURRENT_DATE.getDate() < input.getDate()) {
+  if (CURRENT_NEW_DATE.getDate() < input.getDate()) {
     if (input.getMonth() === 2) {
       return (
-        NUMBER_OF_DAYS_ON_FEBRUARY - input.getDate() + CURRENT_DATE.getDate()
+        NUMBER_OF_DAYS_ON_FEBRUARY -
+        input.getDate() +
+        CURRENT_NEW_DATE.getDate()
       );
     } else if (input.getMonth() % 2 === 0) {
       return (
-        NUMBER_OF_DAYS_ON_EVEN_MONTH - input.getDate() + CURRENT_DATE.getDate()
+        NUMBER_OF_DAYS_ON_EVEN_MONTH -
+        input.getDate() +
+        CURRENT_NEW_DATE.getDate()
       );
     } else {
       return (
-        NUMBER_OF_DAYS_ON_ODD_MONTH - input.getDate() + CURRENT_DATE.getDate()
+        NUMBER_OF_DAYS_ON_ODD_MONTH -
+        input.getDate() +
+        CURRENT_NEW_DATE.getDate()
       );
     }
   }
-  return CURRENT_DATE.getDate() - input.getDate();
+  return CURRENT_NEW_DATE.getDate() - input.getDate();
 };
 
 console.log(getDiffInDays(new Date(1990, 3, 1)));
 
 const getDiffInMonths = (input: Date) => {
   if (
-    CURRENT_DATE.getMonth() < input.getMonth() &&
+    CURRENT_NEW_DATE.getMonth() < input.getMonth() &&
     getDiffInDays(input) < input.getDate()
   ) {
     return (
-      CURRENT_DATE.getMonth() -
+      CURRENT_NEW_DATE.getMonth() -
       input.getMonth() +
       NUMBER_OF_MONTHS_IN_A_YEAR +
       ", Days: " +
       getDiffInDays(input)
     );
   } else if (
-    CURRENT_DATE.getMonth() === input.getMonth() &&
-    CURRENT_DATE.getDate() === input.getDate()
+    CURRENT_NEW_DATE.getMonth() === input.getMonth() &&
+    CURRENT_NEW_DATE.getDate() === input.getDate()
   ) {
     return (
-      CURRENT_DATE.getMonth() -
+      CURRENT_NEW_DATE.getMonth() -
       input.getMonth() +
       ", Days: " +
       getDiffInDays(input)
     );
   } else if (
-    CURRENT_DATE.getMonth() === input.getMonth() &&
-    CURRENT_DATE.getDate() > input.getDate()
+    CURRENT_NEW_DATE.getMonth() === input.getMonth() &&
+    CURRENT_NEW_DATE.getDate() > input.getDate()
   ) {
     return ", Days: " + getDiffInDays(input);
   } else if (
-    CURRENT_DATE.getMonth() === input.getMonth() &&
-    CURRENT_DATE.getDate() < input.getDate()
+    CURRENT_NEW_DATE.getMonth() === input.getMonth() &&
+    CURRENT_NEW_DATE.getDate() < input.getDate()
   ) {
     return NUMBER_OF_MONTHS_IN_A_YEAR - 1 + ", Days: " + getDiffInDays(input);
   } else if (
-    CURRENT_DATE.getMonth() < input.getMonth() &&
+    CURRENT_NEW_DATE.getMonth() < input.getMonth() &&
     getDiffInDays(input) >= input.getDate()
   ) {
     return (
       NUMBER_OF_MONTHS_IN_A_YEAR -
-      (input.getMonth() - CURRENT_DATE.getMonth()) +
+      (input.getMonth() - CURRENT_NEW_DATE.getMonth()) +
       ", Days: " +
       getDiffInDays(input)
     );
   } else if (
-    CURRENT_DATE.getMonth() >= input.getMonth() &&
+    CURRENT_NEW_DATE.getMonth() >= input.getMonth() &&
     getDiffInDays(input) >= input.getDate()
   ) {
     return (
-      CURRENT_DATE.getMonth() -
+      CURRENT_NEW_DATE.getMonth() -
       input.getMonth() +
       NUMBER_OF_MONTHS_IN_A_YEAR +
       ", Days: " +
@@ -155,7 +164,7 @@ const getDiffInMonths = (input: Date) => {
     );
   }
   return (
-    CURRENT_DATE.getMonth() -
+    CURRENT_NEW_DATE.getMonth() -
     input.getMonth() +
     ", Days: " +
     getDiffInDays(input)
@@ -167,13 +176,13 @@ console.log(getDiffInMonths(new Date(1990, 7, 9)));
 const getDiffInYearsWithMonthsAndDays = (input: Date) => {
   getDiffInYearsValidation(input);
   if (
-    (CURRENT_DATE.getMonth() === input.getMonth() &&
-      CURRENT_DATE.getDate() < input.getDate()) ||
-    CURRENT_DATE.getMonth() < input.getMonth()
+    (CURRENT_NEW_DATE.getMonth() === input.getMonth() &&
+      CURRENT_NEW_DATE.getDate() < input.getDate()) ||
+    CURRENT_NEW_DATE.getMonth() < input.getMonth()
   ) {
     return (
       "Years: " +
-      (CURRENT_DATE.getFullYear() -
+      (CURRENT_NEW_DATE.getFullYear() -
         input.getFullYear() -
         1 +
         ", Months: " +
@@ -182,7 +191,7 @@ const getDiffInYearsWithMonthsAndDays = (input: Date) => {
   }
   return (
     "Years: " +
-    (CURRENT_DATE.getFullYear() -
+    (CURRENT_NEW_DATE.getFullYear() -
       input.getFullYear() +
       ", Months: " +
       getDiffInMonths(input))
@@ -194,13 +203,13 @@ console.log(getDiffInYearsWithMonthsAndDays(new Date(1900, 6, 3)));
 const getDiffInYears = (input: Date) => {
   getDiffInYearsValidation(input);
   if (
-    (CURRENT_DATE.getMonth() === input.getMonth() &&
-      CURRENT_DATE.getDate() < input.getDate()) ||
-    CURRENT_DATE.getMonth() < input.getMonth()
+    (CURRENT_NEW_DATE.getMonth() === input.getMonth() &&
+      CURRENT_NEW_DATE.getDate() < input.getDate()) ||
+    CURRENT_NEW_DATE.getMonth() < input.getMonth()
   ) {
-    return CURRENT_DATE.getFullYear() - input.getFullYear() - 1;
+    return CURRENT_NEW_DATE.getFullYear() - input.getFullYear() - 1;
   }
-  return CURRENT_DATE.getFullYear() - input.getFullYear();
+  return CURRENT_NEW_DATE.getFullYear() - input.getFullYear();
 };
 
 console.log(getDiffInYears(new Date(1900, 5, 12)));
@@ -213,11 +222,11 @@ const result2 = getMyAge(1993);
 console.log(result2);
 const result3 = getDiffInYearsWithMonthsAndDays(new Date(1900, 6, 1));
 console.log(result3);
-const result33 = getDiffInYears(new Date(1900, 5, 4));
-console.log(result33);
-const result4 = getMyAge("1901/04/14");
+const result4 = getDiffInYears(new Date(1900, 6, 1));
 console.log(result4);
-const result5 = getMyAge(new Date(2023, 3, 31));
+const result5 = getMyAge("1901/04/14");
 console.log(result5);
-const result6 = getMyAge("1900/06/01");
+const result6 = getMyAge(new Date(2023, 3, 31));
 console.log(result6);
+const result7 = calculateAgeIfInputIsString("1900 05 04");
+console.log(result7);
