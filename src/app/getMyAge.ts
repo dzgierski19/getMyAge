@@ -2,14 +2,9 @@ const AGE_OF_THE_OLDEST_PERSON: number = 123;
 const NUMBER_OF_MONTHS_IN_A_YEAR: number = 12;
 const CURRENT_YEAR: number = new Date().getFullYear();
 const CURRENT_NEW_DATE: Date = new Date();
-//const CURRENT_DATE = new Date(2023, 5, 3);
 const NUMBER_OF_DAYS_ON_FEBRUARY: number = 28;
 const NUMBER_OF_DAYS_ON_EVEN_MONTH: number = 30;
 const NUMBER_OF_DAYS_ON_ODD_MONTH: number = 31;
-
-// console.log(CURRENT_NEW_DATE);
-
-// console.log(new Date("1900 06 03"));
 
 export const getMyAge = (input: string | number | Date) => {
   if (typeof input === "string") {
@@ -53,8 +48,6 @@ const calculateAgeIfInputIsString = (input: string) => {
     "You must provide string with 4 digits (year only) or in full date format"
   );
 };
-
-//DATE
 
 export const getDiffInYearsValidation = (input: Date) => {
   if (
@@ -106,8 +99,6 @@ const getDiffInDays = (input: Date) => {
   }
   return CURRENT_NEW_DATE.getDate() - input.getDate();
 };
-
-// console.log(getDiffInDays(new Date(1990, 3, 1)));
 
 const getDiffInMonths = (input: Date) => {
   if (
@@ -171,8 +162,6 @@ const getDiffInMonths = (input: Date) => {
   );
 };
 
-// console.log(getDiffInMonths(new Date(1990, 7, 9)));
-
 const getDiffInYearsWithMonthsAndDays = (input: Date) => {
   getDiffInYearsValidation(input);
   if (
@@ -198,9 +187,7 @@ const getDiffInYearsWithMonthsAndDays = (input: Date) => {
   );
 };
 
-// console.log(getDiffInYearsWithMonthsAndDays(new Date(1900, 6, 3)));
-
-export const getDiffInYears = (input: Date) => {
+const getDiffInYears = (input: Date) => {
   getDiffInYearsValidation(input);
   if (
     (CURRENT_NEW_DATE.getMonth() === input.getMonth() &&
@@ -211,22 +198,3 @@ export const getDiffInYears = (input: Date) => {
   }
   return CURRENT_NEW_DATE.getFullYear() - input.getFullYear();
 };
-
-// console.log(getDiffInYears(new Date(1900, 5, 12)));
-
-// const result1 = getMyAge(new Date(2022, 5, 1));
-// console.log(result1);
-// const result2 = getMyAge(1993);
-// console.log(result2);
-// const result3 = getDiffInYearsWithMonthsAndDays(new Date(1965, 9, 7));
-// console.log(result3);
-// const result4 = getDiffInYears(new Date(1900, 7, 1));
-// console.log(result4 + "FUNKCJA");
-// const result5 = getMyAge("1901/04/14");
-// console.log(result5);
-// const result6 = getMyAge(new Date(2023, 3, 31));
-// console.log(result6);
-// const result7 = calculateAgeIfInputIsString("1900 05 04");
-// console.log(result7);
-
-// console.log(getDiffInYears(new Date(1900)));
