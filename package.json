@@ -4,7 +4,7 @@
   "description": "My task is to create function, which accept argument as year of your birthday. Function must return your current age.",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
