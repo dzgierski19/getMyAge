@@ -6,7 +6,10 @@ const NUMBER_OF_DAYS_ON_FEBRUARY: number = 28;
 const NUMBER_OF_DAYS_ON_EVEN_MONTH: number = 30;
 const NUMBER_OF_DAYS_ON_ODD_MONTH: number = 31;
 
-export const getMyAge = (input: string | number | Date) => {
+export const getMyAge = (
+  input: string | number | Date,
+  currentYear: number = new Date().getFullYear()
+) => {
   if (typeof input === "string") {
     return calculateAgeIfInputIsString(input);
   }
@@ -14,7 +17,7 @@ export const getMyAge = (input: string | number | Date) => {
     return getDiffInYears(input);
   }
 
-  return CURRENT_YEAR - getValidYear(input);
+  return currentYear - getValidYear(input);
 };
 
 const getValidYear = (input: number) => {
